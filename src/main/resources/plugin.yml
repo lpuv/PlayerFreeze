@@ -1,0 +1,4 @@
+name: PlayerFreeze
+version: 0.0.1
+author: Evan Straw
+main: pw.evan.PlayerFreeze.Main
