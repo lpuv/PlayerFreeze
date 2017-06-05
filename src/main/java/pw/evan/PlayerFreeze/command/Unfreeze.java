@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pw.evan.PlayerFreeze.Main;
 import pw.evan.PlayerFreeze.manager.UserManager;
+import pw.evan.PlayerFreeze.model.User;
 import pw.evan.PlayerFreeze.util.ChatUtil;
 
 public class Unfreeze implements CommandExecutor
@@ -26,7 +27,7 @@ public class Unfreeze implements CommandExecutor
             if (args.length >= 1)
             {
                 String playerName = args[0];
-                UserManager.User user = UserManager.get().getUser(playerName);
+                User user = UserManager.get().getUser(playerName);
                 if (user != null)
                 {
                     if(!user.isFrozen())

@@ -6,13 +6,14 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import pw.evan.PlayerFreeze.manager.UserManager;
+import pw.evan.PlayerFreeze.model.User;
 
 public class PlayerBlockListener implements Listener
 {
     @EventHandler
     public void onPlayerPlace(BlockPlaceEvent event)
     {
-        UserManager.User user = UserManager.get().getUser(event.getPlayer());
+        User user = UserManager.get().getUser(event.getPlayer());
         if(user.isFrozen()){
             event.setCancelled(true);
         }
@@ -21,7 +22,7 @@ public class PlayerBlockListener implements Listener
     @EventHandler
     public void onPlayerBreak(BlockBreakEvent event)
     {
-        UserManager.User user = UserManager.get().getUser(event.getPlayer());
+        User user = UserManager.get().getUser(event.getPlayer());
         if(user.isFrozen()){
             event.setCancelled(true);
         }
@@ -30,7 +31,7 @@ public class PlayerBlockListener implements Listener
     @EventHandler
     public void onPlayerUse(PlayerInteractEvent event)
     {
-        UserManager.User user = UserManager.get().getUser(event.getPlayer());
+        User user = UserManager.get().getUser(event.getPlayer());
         if(user.isFrozen()){
             event.setCancelled(true);
         }

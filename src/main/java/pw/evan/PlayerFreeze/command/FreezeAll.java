@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pw.evan.PlayerFreeze.Main;
 import pw.evan.PlayerFreeze.manager.UserManager;
+import pw.evan.PlayerFreeze.model.User;
 import pw.evan.PlayerFreeze.util.ChatUtil;
 import pw.evan.PlayerFreeze.util.TimeUtil;
 
@@ -48,7 +49,7 @@ public class FreezeAll implements CommandExecutor
             {
                 if(!currentPlayer.hasPermission("playerfreeze.exempt"))
                 {
-                    UserManager.User user = UserManager.get().getUser(currentPlayer);
+                    User user = UserManager.get().getUser(currentPlayer);
                     user.setFrozenUntil(frozenUntil);
                     user.setFrozen(true);
                     UserManager.get().updateUser(user);
