@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import pw.evan.PlayerFreeze.Main;
 import pw.evan.PlayerFreeze.manager.UserManager;
 import pw.evan.PlayerFreeze.util.ChatUtil;
+import pw.evan.PlayerFreeze.util.TimeUtil;
 
 public class Freeze implements CommandExecutor
 {
@@ -31,7 +32,18 @@ public class Freeze implements CommandExecutor
                 {
                     if (args.length >= 2)
                     { //we're going to be attempting to temp freeze
-                        //lets get temp freezing running later
+                        try
+                        {
+                            long seconds = TimeUtil.parseTimeString(args[1]);
+                            long frozenUntil = TimeUtil.time()+seconds;
+                            user.setFrozenUntil(frozenUntil);
+                            sender.sendMessage(plugin.getShortPrefix()+ChatUtil.colorize("&bPlayer &d "+playerName+" &bhas been frozen for &6"+TimeUtil.makeFormatString(seconds)+"&b!"));
+                        }
+                        catch (IllegalArgumentException e)
+                        {
+                            String errorMessage = plugin.getShortPrefix()+ChatUtil.colorize("&c"+e.getMessage());
+                            sender.sendMessage(errorMessage);
+                        }
                     }
                     else
                     {

@@ -115,4 +115,64 @@ public class TimeUtil
                 return false;
         }
     }
+
+    public static long time(){
+        return System.currentTimeMillis()/1000;
+    }
+
+    public static String makeFormatString(long seconds)
+    {
+        long days = seconds / 86400;
+        seconds = seconds % 86400;
+        long hours = seconds / 3600;
+        seconds = seconds % 3600;
+        long minutes = seconds / 60;
+        seconds = seconds % 60;
+        StringBuilder formatted = new StringBuilder();
+        if(days>0)
+        {
+            formatted.append(days);
+            formatted.append(" days");
+            if(hours>0)
+            {
+                formatted.append(", ");
+            }
+            else
+            {
+                formatted.append(" ");
+            }
+        }
+        if(hours>0)
+        {
+            formatted.append(hours);
+            formatted.append(" hours");
+            if(minutes>0)
+            {
+                formatted.append(", ");
+            }
+            else
+            {
+                formatted.append(" ");
+            }
+        }
+        if(minutes>0)
+        {
+            formatted.append(minutes);
+            formatted.append(" minutes");
+            if(seconds>0)
+            {
+                formatted.append(", ");
+            }
+            else
+            {
+                formatted.append(" ");
+            }
+        }
+        if (seconds > 0)
+        {
+            formatted.append(seconds);
+            formatted.append(" seconds");
+        }
+        return formatted.toString();
+    }
 }
