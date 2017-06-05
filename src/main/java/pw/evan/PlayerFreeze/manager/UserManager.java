@@ -166,7 +166,10 @@ public class UserManager
         }
     }
 
-
+    public User getUser(Player player)
+    {
+        return getUser(player.getUniqueId());
+    }
 
     private HashMap<UUID,User> loadAllUsers(){
         File storageDirectory = getStorageDirectory();
@@ -241,7 +244,7 @@ public class UserManager
         users.put(user.getUuid(),user);
     }
 
-    private void uncacheUser(UUID uuid){
+    public void uncacheUser(UUID uuid){
         users.put(uuid, null);
     }
 
