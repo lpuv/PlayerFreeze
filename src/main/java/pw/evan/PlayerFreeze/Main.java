@@ -9,6 +9,7 @@ import pw.evan.PlayerFreeze.command.UnfreezeAll;
 import pw.evan.PlayerFreeze.listener.PlayerBlockListener;
 import pw.evan.PlayerFreeze.listener.PlayerMoveListener;
 import pw.evan.PlayerFreeze.manager.UserManager;
+import pw.evan.PlayerFreeze.scheduler.MessageBroadcaster;
 import pw.evan.PlayerFreeze.scheduler.TempFreezeChecker;
 import pw.evan.PlayerFreeze.util.ChatUtil;
 
@@ -29,6 +30,8 @@ public class Main extends JavaPlugin
         ChatUtil.console(this,getPluginPrefix()+"&aVersion &bv"+getDescription().getVersion()+" &aenabling...");
         UserManager.get(this); //create a UserManager
 
+        saveDefaultConfig();
+
         getCommand("freeze").setExecutor(new Freeze(this));
         getCommand("freezeall").setExecutor(new FreezeAll(this));
         getCommand("unfreeze").setExecutor(new Unfreeze(this));
@@ -38,6 +41,8 @@ public class Main extends JavaPlugin
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(),this);
 
         new TempFreezeChecker(this).runTaskTimer(this,0,20);
+        new MessageBroadcaster(this).runTaskTimer(this,0,20);
+
         ChatUtil.console(this,getPluginPrefix()+"&aVersion &bv"+getDescription().getVersion()+" &aenabled!");
     }
 

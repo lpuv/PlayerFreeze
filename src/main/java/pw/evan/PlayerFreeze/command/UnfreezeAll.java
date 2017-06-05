@@ -1,5 +1,6 @@
 package pw.evan.PlayerFreeze.command;
 
+import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Player;
 import pw.evan.PlayerFreeze.Main;
 import pw.evan.PlayerFreeze.manager.UserManager;
 import pw.evan.PlayerFreeze.model.User;
+import pw.evan.PlayerFreeze.util.ActionBarAPIUtil;
 import pw.evan.PlayerFreeze.util.ChatUtil;
 
 public class UnfreezeAll implements CommandExecutor
@@ -34,6 +36,10 @@ public class UnfreezeAll implements CommandExecutor
                 if(user.isFrozen())
                 {
                     user.setFrozen(false);
+                    if(ActionBarAPIUtil.hasActionBarAPI(plugin))
+                    {
+                        ActionBarAPI.sendActionBar(currentPlayer, ChatUtil.colorize("&aYou have been unfrozen!"),40);
+                    }
                     UserManager.get().updateUser(user);
                 }
             }

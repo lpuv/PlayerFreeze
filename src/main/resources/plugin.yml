@@ -1,5 +1,5 @@
 name: PlayerFreeze
-version: 0.0.1
+version: 1.0.1
 author: Evan Straw
 main: pw.evan.PlayerFreeze.Main
 description: Allows for players to be frozen in place, preventing them from moving or otherwise playing the game.
@@ -7,19 +7,15 @@ softdepend: [ActionBarAPI]
 commands:
   freeze:
     description: Freezes a player. The player will not be able to move or place or break blocks.
-    permission: playerfreeze.freeze
     usage: "Usage: /freeze <player> [time]"
   freezeall:
     description: Freezes all players (except those who are exempt).
-    permisson: playerfreeze.freeze.all
     usage: "Usage: /freezeall [time]"
   unfreeze:
     description: Unfreezes a player.
-    permission: playerfreeze.unfreeze
     usage: "Usage: /unfreeze <player>"
   unfreezeall:
     description: Unfreezes all frozen players.
-    permission: playerfreeze.unfreeze.all
     usage: "Usage: /unfreezeall"
 permissions:
   playerfreeze.freeze:

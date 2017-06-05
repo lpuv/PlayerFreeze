@@ -35,7 +35,7 @@ public class FreezeAll implements CommandExecutor
             { //we're going to be attempting to temp freeze
                 try
                 {
-                    seconds = TimeUtil.parseTimeString(args[1]);
+                    seconds = TimeUtil.parseTimeString(args[0]);
                     frozenUntil = TimeUtil.time() + seconds;
                 }
                 catch (IllegalArgumentException e)

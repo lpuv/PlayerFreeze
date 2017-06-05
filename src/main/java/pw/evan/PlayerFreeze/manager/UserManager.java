@@ -79,7 +79,7 @@ public class UserManager
 
     private void saveUser(User user){
         FileConfiguration playerStorage = getPlayerStorage(user.getUuid());
-        playerStorage.set("uuid",user.getUuid());
+        playerStorage.set("uuid",user.getUuid().toString());
         playerStorage.set("username",user.getUsername());
         playerStorage.set("frozen",user.isFrozen());
         playerStorage.set("frozen-until",user.getFrozenUntil());
