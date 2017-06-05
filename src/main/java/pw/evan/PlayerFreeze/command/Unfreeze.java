@@ -36,6 +36,7 @@ public class Unfreeze implements CommandExecutor
                     else
                     {
                         user.setFrozen(false);
+                        UserManager.get().updateUser(user);
                         sender.sendMessage(plugin.getShortPrefix() + ChatUtil.colorize("&bPlayer &d " + playerName + " &bhas been unfrozen!"));
                     }
                 }

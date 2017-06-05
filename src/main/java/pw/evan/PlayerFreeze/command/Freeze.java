@@ -37,6 +37,7 @@ public class Freeze implements CommandExecutor
                             long seconds = TimeUtil.parseTimeString(args[1]);
                             long frozenUntil = TimeUtil.time()+seconds;
                             user.setFrozenUntil(frozenUntil);
+                            UserManager.get().updateUser(user);
                             sender.sendMessage(plugin.getShortPrefix()+ChatUtil.colorize("&bPlayer &d "+playerName+" &bhas been frozen for &6"+TimeUtil.makeFormatString(seconds)+"&b!"));
                         }
                         catch (IllegalArgumentException e)
@@ -54,6 +55,7 @@ public class Freeze implements CommandExecutor
                         else
                         {
                             user.setFrozen(true);
+                            UserManager.get().updateUser(user);
                             sender.sendMessage(plugin.getShortPrefix()+ChatUtil.colorize("&bPlayer &d "+playerName+" &bhas been frozen!"));
                         }
                     }
