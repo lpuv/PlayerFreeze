@@ -2,7 +2,9 @@ package pw.evan.PlayerFreeze.manager;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import pw.evan.PlayerFreeze.Main;
+import pw.evan.PlayerFreeze.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -138,6 +140,9 @@ public class UserManager
     private User loadUser(UUID uuid){
         FileConfiguration playerStorage = getPlayerStorage(uuid);
         String username = playerStorage.getString("username");
+        if(username==null){
+            return null;
+        }
         User returned = new User(uuid,username);
         returned.setFrozen(playerStorage.getBoolean("frozen",false));
         returned.setFrozenUntil(playerStorage.getInt("frozenUntil",-1));
@@ -161,6 +166,58 @@ public class UserManager
         }
     }
 
+
+
+    private HashMap<UUID,User> loadAllUsers(){
+        File storageDirectory = getStorageDirectory();
+        File[] userStorageFiles = storageDirectory.listFiles();
+        HashMap<UUID, User> returned = new HashMap<>();
+        if(userStorageFiles != null)
+        {
+            for (File current : userStorageFiles)
+            {
+                String extension = FileUtil.getFileExtension(current);
+                if(extension.equalsIgnoreCase("yml")){
+                    String fileName = FileUtil.stripExtension(current);
+                    if(FileUtil.validateUUID(fileName)){
+                        UUID uuid = UUID.fromString(fileName);
+                        User loaded = loadUser(uuid);
+                        if(loaded != null){
+                            returned.put(uuid,loaded);
+                        }
+                    }
+                }
+            }
+        }
+        return returned;
+    }
+
+    private User searchUserFiles(String username){
+        File storageDirectory = getStorageDirectory();
+        File[] userStorageFiles = storageDirectory.listFiles();
+        User returned;
+        if(userStorageFiles != null)
+        {
+            for (File current : userStorageFiles)
+            {
+                String extension = FileUtil.getFileExtension(current);
+                if(extension.equalsIgnoreCase("yml")){
+                    String fileName = FileUtil.stripExtension(current);
+                    if(FileUtil.validateUUID(fileName)){
+                        UUID uuid = UUID.fromString(fileName);
+                        User loaded = loadUser(uuid);
+                        if(loaded != null){
+                            if(loaded.getUsername().equalsIgnoreCase(username)){
+                                return loaded;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public User getUser(UUID uuid){
         User cachedUser = users.get(uuid);
         if(cachedUser !=null){
@@ -170,27 +227,50 @@ public class UserManager
         {
             User loadedUser = loadUser(uuid);
             if(loadedUser !=null){
-                users.put(uuid, loadedUser);
+                cacheUser(loadedUser);
             }
             return loadedUser;
         }
     }
 
+    private Player getOnlinePlayer(String username){
+        return plugin.getServer().getPlayer(username);
+    }
+
+    private void cacheUser(User user){
+        users.put(user.getUuid(),user);
+    }
+
+    private void uncacheUser(UUID uuid){
+        users.put(uuid, null);
+    }
+
     public User getUser(String username){
-        Iterator<Map.Entry<UUID,User>> i = users.entrySet().iterator();
-        while(i.hasNext()){
-            Map.Entry<UUID,User> current = i.next();
-            User currentUser = current.getValue();
-            if(currentUser.getUsername().equalsIgnoreCase(username)){
-                return currentUser;
-            }
+        Player onlinePlayer = getOnlinePlayer(username);
+        if(onlinePlayer!=null)
+        {
+            return getUser(onlinePlayer.getUniqueId());
         }
-        return null;
+        else
+        {
+            for (Map.Entry<UUID, User> current : users.entrySet())
+            {
+                User currentUser = current.getValue();
+                if (currentUser.getUsername().equalsIgnoreCase(username))
+                {
+                    return currentUser;
+                }
+            }
+            User loaded = searchUserFiles(username);
+            if(loaded!=null){
+                cacheUser(loaded);
+            }
+            return loaded;
+        }
     }
 
     public void updateUser(User user){
-        users.put(user.uuid,null);
-        users.put(user.uuid,user);
+        cacheUser(user);
         saveUser(user);
     }
 

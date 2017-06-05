@@ -25,13 +25,13 @@ permissions:
   playerfreeze.freeze:
     description: Allows the use of the /freeze command
     default: false
-  playerfreeze.freeze.all:
+  playerfreeze.freezeall:
     description: Allows the use of the /freezeall command
     default: false
   playerfreeze.unfreeze:
     description: Allows the use of the /unfreeze command
     default: false
-  playerfreeze.unfreeze.all:
+  playerfreeze.unfreezeall:
     description: Allows the use of the /unfreezeall command
     default: false
   playerfreeze.exempt:
