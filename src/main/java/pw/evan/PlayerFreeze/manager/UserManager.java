@@ -96,7 +96,14 @@ public class UserManager
 
     public User getUser(Player player)
     {
-        return getUser(player.getUniqueId());
+        User loaded = getUser(player.getUniqueId());
+        if(loaded == null)
+        {
+            loaded = new User(player.getUniqueId(),player.getName());
+            cacheUser(loaded);
+            saveUser(loaded);
+        }
+        return loaded;
     }
 
     private HashMap<UUID,User> loadAllUsers(){
@@ -173,7 +180,11 @@ public class UserManager
     }
 
     public void uncacheUser(UUID uuid){
-        users.put(uuid, null);
+        if(users.get(uuid)!=null)
+        {
+            saveUser(users.get(uuid));
+            users.put(uuid, null);
+        }
     }
 
     public User getUser(String username){
