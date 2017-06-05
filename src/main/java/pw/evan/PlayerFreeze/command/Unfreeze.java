@@ -9,10 +9,10 @@ import pw.evan.PlayerFreeze.Main;
 import pw.evan.PlayerFreeze.manager.UserManager;
 import pw.evan.PlayerFreeze.util.ChatUtil;
 
-public class Freeze implements CommandExecutor
+public class Unfreeze implements CommandExecutor
 {
     private Main plugin;
-    public Freeze(Main plugin){
+    public Unfreeze(Main plugin){
         if(plugin==null){
             throw new IllegalArgumentException("Plugin cannot be null!");
         }
@@ -21,7 +21,7 @@ public class Freeze implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
-        if(!(sender instanceof Player) || sender.hasPermission("playerfreeze.freeze"))
+        if(!(sender instanceof Player) || sender.hasPermission("playerfreeze.unfreeze"))
         {
             if (args.length >= 1)
             {
@@ -29,21 +29,14 @@ public class Freeze implements CommandExecutor
                 UserManager.User user = UserManager.get().getUser(playerName);
                 if (user != null)
                 {
-                    if (args.length >= 2)
-                    { //we're going to be attempting to temp freeze
-                        //lets get temp freezing running later
+                    if(!user.isFrozen())
+                    {
+                        sender.sendMessage(plugin.getShortPrefix() + ChatUtil.colorize("&cPlayer &d " + playerName + " &cis not frozen!"));
                     }
                     else
                     {
-                        if(user.isFrozen())
-                        {
-                            sender.sendMessage(plugin.getShortPrefix()+ChatUtil.colorize("&cPlayer &d "+ playerName + " &cis already frozen!"));
-                        }
-                        else
-                        {
-                            user.setFrozen(true);
-                            sender.sendMessage(plugin.getShortPrefix()+ChatUtil.colorize("&bPlayer &d "+playerName+" &bhas been frozen!"));
-                        }
+                        user.setFrozen(false);
+                        sender.sendMessage(plugin.getShortPrefix() + ChatUtil.colorize("&bPlayer &d " + playerName + " &bhas been unfrozen!"));
                     }
                 }
                 else
