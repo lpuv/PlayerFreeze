@@ -1,5 +1,5 @@
 name: PlayerFreeze
-version: 1.0.1
+version: 1.0.2
 author: Evan Straw
 main: pw.evan.PlayerFreeze.Main
 description: Allows for players to be frozen in place, preventing them from moving or otherwise playing the game.
