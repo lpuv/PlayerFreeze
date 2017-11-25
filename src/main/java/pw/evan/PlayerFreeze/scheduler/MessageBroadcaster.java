@@ -27,7 +27,7 @@ public class MessageBroadcaster extends BukkitRunnable
             {
                 if(ActionBarAPIUtil.hasActionBarAPI(plugin))
                 {
-                    long secondsLeft = TimeUtil.time()-currentUser.getFrozenUntil();
+                    long secondsLeft = currentUser.getFrozenUntil()-TimeUtil.time();
                     ActionBarAPI.sendActionBar(current, ChatUtil.colorize("&aYou are frozen for &6"+TimeUtil.makeFormatString(secondsLeft)+"&b!"));
                 }
             }
