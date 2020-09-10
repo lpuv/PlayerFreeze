@@ -4,6 +4,8 @@ Plugin for Minecraft servers running Spigot that can freeze players in place.
 I created this thing a very long time ago for a particular private server I was in charge of administrating.
 I figured I might as well put it up on GitHub in case anyone else is interested in using it, modifying it, or learning from its source.
 
+
+
 ## Usage
 Usage is pretty simple, install the plugin then do `/freeze` to freeze someone, `/unfreeze` to unfreeze them. See [plugin.yml](https://github.com/evan3334/PlayerFreeze/blob/master/src/main/resources/plugin.yml) for complete commands, usage, and permissions.
 
